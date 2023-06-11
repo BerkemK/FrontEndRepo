@@ -22,8 +22,8 @@
       </tr>
       <tr v-for="item in myFilterFunc(filterCrit)" :key="item.id">
         <td>{{item.name}}</td>
-        <td>{{item.Alkoholgehalt}}</td>
-        <td>{{item.Milliliter}}</td>
+        <td>{{item.alcGehalt}}</td>
+        <td>{{item.ml}}</td>
       </tr>
       <tr>
         <td>{{ nameField }}</td>
@@ -57,9 +57,10 @@ export default {
           it.name.toLowerCase().includes(crit.toLowerCase()))
     },
     loadThings () {
-      const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
-      const email = this.claims.email
-      const endpoint = baseUrl + '/drinks' + '?owner=' + email
+      //const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
+      //const email = this.claims.email
+      //const endpoint = baseUrl + '/drinks' + '?owner=' + email
+      const endpoint = 'http://localhost:8080/drinks'
       const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -69,19 +70,20 @@ export default {
       }
       fetch(endpoint, requestOptions)
         .then(response => response.json())
-        .then(result => result.forEach(thing => {
-          this.items.push(thing)
+        .then(result => result.forEach(drink => {
+          this.items.push(drink)
         }))
         .catch(error => console.log('error', error))
     },
     save () {
-      const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
-      const endpoint = baseUrl + '/drinks'
+      //const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
+      //const endpoint = baseUrl + '/drinks'
+      const endpoint = 'http://localhost:8080/drinks'
       const data = {
         name: this.nameField,
         alcGehalt: this.alcGehaltField,
         ml: this.mlField,
-        owner: this.claims.email
+        //owner: this.claims.email
       }
       const requestOptions = {
         method: 'POST',
