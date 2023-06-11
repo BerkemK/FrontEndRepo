@@ -2,7 +2,8 @@
   <h3> {{ title }} </h3>
   <div>
     <input v-model="nameField" placeholder="Name" type="text" ref="nameInput">
-    <input v-model="priceField" placeholder="Price" @keyup.enter="save()">
+    <input v-model="alcGehaltField" placeholder="Alkoholgehalt" type="text" ref="alcGehaltInput">
+    <input v-model="mlField" placeholder="Milliliter" type="text" ref="mlInput" @keyup.enter="save()">
     <button type="button" @click="save()">Save</button>
     <input v-model="filterCrit" placeholder="filter criterion">
   </div>
@@ -11,7 +12,8 @@
       <thead>
       <tr>
         <th>Name</th>
-        <th>Price</th>
+        <th>Alkoholgehalt</th>
+        <th>Milliliter</th>
       </tr>
       </thead>
       <tbody>
@@ -20,11 +22,13 @@
       </tr>
       <tr v-for="item in myFilterFunc(filterCrit)" :key="item.id">
         <td>{{item.name}}</td>
-        <td>{{item.price}}</td>
+        <td>{{item.Alkoholgehalt}}</td>
+        <td>{{item.Milliliter}}</td>
       </tr>
       <tr>
         <td>{{ nameField }}</td>
-        <td>{{ priceField }}</td>
+        <td>{{ alcGehaltField }}</td>
+        <td>{{ mlField }}</td>
       </tr>
       </tbody>
     </table>
@@ -39,7 +43,8 @@ export default {
     return {
       items: [],
       nameField: '',
-      priceField: '',
+      alcGehaltField: '',
+      mlField: '',
       claims: '',
       accessToken: '',
       filterCrit: ''
@@ -54,7 +59,7 @@ export default {
     loadThings () {
       const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
       const email = this.claims.email
-      const endpoint = baseUrl + '/things' + '?owner=' + email
+      const endpoint = baseUrl + '/drinks' + '?owner=' + email
       const requestOptions = {
         method: 'GET',
         redirect: 'follow'
@@ -71,10 +76,11 @@ export default {
     },
     save () {
       const baseUrl = process.env.VUE_APP_BACKEND_BASE_URL
-      const endpoint = baseUrl + '/things'
+      const endpoint = baseUrl + '/drinks'
       const data = {
         name: this.nameField,
-        price: this.priceField,
+        alcGehalt: this.alcGehaltField,
+        ml: this.mlField,
         owner: this.claims.email
       }
       const requestOptions = {
