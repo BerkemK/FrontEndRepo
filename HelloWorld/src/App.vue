@@ -1,16 +1,7 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/login" v-if="!authenticated">
-      Login
-    </router-link> |
-    <router-link to="/profile" v-if="authenticated" >
-      Profile
-    </router-link> |
-    <a v-if="authenticated" v-on:click="logout()">
-      Logout
-    </a>
+    <router-link to="/about">About</router-link>
   </div>
   <router-view/>
 </template>
