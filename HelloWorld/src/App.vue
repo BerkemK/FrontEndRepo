@@ -3,7 +3,7 @@
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </div>
-  <div>can drive {{canDrive}}</div>
+  <div>{{canDrive}}</div>
   <router-view/>
 
 
@@ -14,8 +14,8 @@ import moment from "moment/moment";
 
 export default {
   name: 'app',
-  data: function () {
-    return { authenticated: false, canDrive: null }
+  data() {
+    return { canDrive: '' }
   },
   async created() {
     await this.isAuthenticated();
