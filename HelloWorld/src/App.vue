@@ -2,8 +2,9 @@
   <div id="nav">
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
+    <br>
+    <p>{{canDrive}}</p>
   </div>
-  <div>{{canDrive}}</div>
   <router-view/>
 
 
@@ -15,7 +16,7 @@ import moment from "moment/moment";
 export default {
   name: 'app',
   data() {
-    return { canDrive: '' }
+    return { canDrive: '',  claims: '' }
   },
   async created() {
     await this.isAuthenticated();
