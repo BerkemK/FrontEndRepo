@@ -27,7 +27,7 @@
         <td>{{ item.name }}</td>
         <td>{{ item.alcGehalt }}</td>
         <td>{{ item.ml }}</td>
-        <td>{{ formatDateForDisplay(item.nuechtern) }}</td>
+        <td> {{ formatDateForDisplay(item.nuechtern) }}</td>
       </tr>
       <tr>
         <td>{{ nameField }}</td>
@@ -130,6 +130,7 @@ export default {
 </script>
 
 <style scoped>
+@import "./style.css";
 table {
   margin-left: auto;
   margin-right: auto;
