@@ -109,6 +109,7 @@ export default {
         const responseData = await response.json();
         console.log('Success:', responseData);
         await this.loadDrinks();
+        this.$forceUpdate();
       } catch (error) {
         console.log('error', error);
       }
