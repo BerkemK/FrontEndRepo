@@ -1,6 +1,6 @@
 <template>
   <div id="home" class="home">
-    <DynamicForm title="Let's talk to the backend!"/>
+    <DynamicForm title="What did you drink today?"/>
   </div>
 </template>
 
