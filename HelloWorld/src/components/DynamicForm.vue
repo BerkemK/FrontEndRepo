@@ -128,9 +128,8 @@ export default {
         redirect: 'follow'
       };
       fetch(endpoint, requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            console.log('Item deleted:', data);
+          .then(response => {
+            console.log('Items deleted:', data);
             this.loadThings(); // Refresh the list after deletion
             location.reload();
           })
@@ -143,8 +142,7 @@ export default {
         redirect: 'follow'
       };
       fetch(endpoint, requestOptions)
-          .then(response => response.json())
-          .then(data => {
+          .then(response => {
             console.log('Items deleted:', data);
             this.loadThings(); // Refresh the list after deletion
             location.reload();
