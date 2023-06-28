@@ -1,11 +1,13 @@
 <template>
   <h3>{{ title }}</h3>
   <div>
-    <button type="button" @click="deleteAll()">Delete All</button><br>
+    <button type="button" @click="deleteAll()" :style="{ color: canDrive === 'darf nicht Auto fahren' ? 'red' : 'green' }"
+    >Delete All</button><br>
     <input v-model="nameField" placeholder="Name" type="text" ref="nameInput">
     <input v-model="alcGehaltField" placeholder="Alkoholgehalt" type="text" ref="alcGehaltInput">
     <input v-model="mlField" placeholder="Milliliter" type="text" ref="mlInput" @keyup.enter="save()">
-    <button type="button" @click="save()">Save</button><br>
+    <button type="button" @click="save()" :style="{ color: canDrive === 'darf nicht Auto fahren' ? 'red' : 'green' }"
+    >Save</button><br>
     <input v-model="filterCrit" placeholder="Filterkriterium">
   </div>
   <div>
@@ -31,7 +33,8 @@
         <td>{{ item.ml }}</td>
         <td>{{ formatDateForDisplay(item.nuechtern) }}</td>
         <td>
-          <button type="button" @click="deleteItem(item.id)">Delete</button>
+          <button type="button" @click="deleteItem(item.id)" :style="{ color: canDrive === 'darf nicht Auto fahren' ? 'red' : 'green' }"
+          >Delete</button>
         </td>
       </tr>
       <tr>
@@ -58,7 +61,8 @@ export default {
       mlField: '',
       claims: '',
       accessToken: '',
-      filterCrit: ''
+      filterCrit: '',
+      canDrive: ''
     };
   },
   methods: {
@@ -149,6 +153,19 @@ export default {
           })
           .catch(error => console.log('error', error));
     },
+    async loadCanDrive() {
+      const endpoint = 'http://localhost:8080/canDrive';
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+      fetch(endpoint, requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            this.canDrive = result;
+          })
+          .catch(error => console.log('error', error));
+    },
     async setup() {
       if (this.$root.authenticated) {
         this.claims = await this.$auth.getUser();
@@ -158,6 +175,7 @@ export default {
   async created() {
     await this.setup();
     this.loadThings();
+    this.loadCanDrive();
   },
   mounted() {}
 };
