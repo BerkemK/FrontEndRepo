@@ -115,10 +115,8 @@ export default {
       fetch(endpoint, requestOptions)
           .then(response => {
             console.log('Success:', data);
-            setTimeout(function() {
-              this.loadThings(); // Refresh the list after deletion
+              this.loadThings();
               location.reload();
-            }, 2000); // Seite wird nach 2 Sekunden aktualisiert
           })
           .catch(error => console.log('error', error));
 
