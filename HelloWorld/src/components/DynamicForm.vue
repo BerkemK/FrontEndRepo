@@ -112,8 +112,13 @@ export default {
           .then(response => response.json())
           .then(data => {
             console.log('Success:', data);
+            setTimeout(function() {
+              this.loadThings(); // Refresh the list after deletion
+              location.reload();
+            }, 2000); // Seite wird nach 2 Sekunden aktualisiert
           })
           .catch(error => console.log('error', error));
+
     },
     deleteItem(itemId) {
       const endpoint = `http://localhost:8080/drinks/${itemId}`;
@@ -126,6 +131,7 @@ export default {
           .then(data => {
             console.log('Item deleted:', data);
             this.loadThings(); // Refresh the list after deletion
+            location.reload();
           })
           .catch(error => console.log('error', error));
     },
@@ -138,8 +144,9 @@ export default {
       fetch(endpoint, requestOptions)
           .then(response => response.json())
           .then(data => {
-            console.log('Item deleted:', data);
+            console.log('Items deleted:', data);
             this.loadThings(); // Refresh the list after deletion
+            location.reload();
           })
           .catch(error => console.log('error', error));
     },
