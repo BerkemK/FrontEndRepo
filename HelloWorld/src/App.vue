@@ -6,7 +6,7 @@
     <table>
       <tr>
           <td :style="{ color: canDrive === 'darf nicht Auto fahren' ? 'red' : 'green' }">
-            {{ canDrive }}
+            <h1> {{ canDrive }} </h1>
           </td>
       </tr>
     </table>
