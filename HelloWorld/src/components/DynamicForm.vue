@@ -109,8 +109,7 @@ export default {
         body: JSON.stringify(data)
       };
       fetch(endpoint, requestOptions)
-          .then(response => response.json())
-          .then(data => {
+          .then(response => {
             console.log('Success:', data);
             setTimeout(function() {
               this.loadThings(); // Refresh the list after deletion

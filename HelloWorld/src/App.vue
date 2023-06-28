@@ -5,11 +5,12 @@
     <br>
     <table>
       <tr>
-          <td v-if="dataLoaded">
+          <td :style="{ color: canDrive === 'darf nicht Auto fahren' ? 'red' : 'green' }">
             {{ canDrive }}
           </td>
       </tr>
     </table>
+
 
   </div>
   <router-view/>
@@ -23,13 +24,12 @@ import moment from "moment/moment";
 export default {
   name: 'app',
   data() {
-    return { canDrive: '', claims: '', dataLoaded: false }
+    return { canDrive: '', claims: '' }
   },
   async created() {
+    this.loadCanDrive();
     await this.isAuthenticated();
     this.$auth.authStateManager.subscribe(this.isAuthenticated);
-    await this.loadCanDrive();
-    this.dataLoaded = true; // Daten sind geladen
   },
   watch: {
     // Everytime the route changes, check for auth status
@@ -45,20 +45,18 @@ export default {
         method: 'GET',
         redirect: 'follow'
       };
-
-      try {
-        const response = await fetch(endpoint, requestOptions);
-        const result = await response.json();
-        this.canDrive = result;
-      } catch (error) {
-        console.log('error', error);
-      }
+      fetch(endpoint, requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            this.canDrive = result;
+          })
+          .catch(error => console.log('error', error));
     },
+
     async logout () {
       await this.$auth.signOut()
     }
-  }
-}
+  },}
 </script>
 
 <style>
@@ -81,5 +79,10 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
