@@ -8,6 +8,10 @@
           <td :style="{ color: canDrive === 'darf nicht Auto fahren' ? 'red' : 'green' }">
             <h1> {{ canDrive }} </h1>
           </td>
+        <td>
+          <img v-if="canDrive === 'darf nicht Auto fahren'" src="src\components\bilder\kreuz.jpg" alt="Hier sollte ein rotes Kreuz zu sehen sein">
+          <img v-else src="src\components\bilder\haken.jpg" alt="hier sollte ein grüner Haken zu sehen sein">
+        </td>
       </tr>
     </table>
 
