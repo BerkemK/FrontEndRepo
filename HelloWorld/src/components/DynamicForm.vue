@@ -73,7 +73,7 @@ export default {
               it.name.toLowerCase().includes(crit.toLowerCase())
       );
     },
-    loadThings() {
+    loadDrinks() {
       const endpoint = 'http://localhost:8080/drinks';
       const requestOptions = {
         method: 'GET',
@@ -173,7 +173,7 @@ export default {
   },
   async created() {
     await this.setup();
-    this.loadThings();
+    this.loadDrinks();
     this.loadCanDrive();
   },
   mounted() {}
