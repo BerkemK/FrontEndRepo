@@ -129,8 +129,10 @@ export default {
       };
       fetch(endpoint, requestOptions)
           .then(response => {
-            console.log('Items deleted:', data);
-            this.loadThings(); // Refresh the list after deletion
+            console.log('Items deleted:', itemId);
+            // Remove the item from the local array
+            this.items = this.items.filter(item => item.id !== itemId);
+            this.loadThings();
             location.reload();
           })
           .catch(error => console.log('error', error));
@@ -143,9 +145,10 @@ export default {
       };
       fetch(endpoint, requestOptions)
           .then(response => {
-            console.log('Items deleted:', data);
-            this.loadThings(); // Refresh the list after deletion
+            console.log('Items deleted');
+            this.loadThings();
             location.reload();
+            this.items = [];
           })
           .catch(error => console.log('error', error));
     },
