@@ -17,6 +17,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
         working-directory: .
+      - name: install vitejs plugin-vue
+        run: npm install --save-dev @vitejs/plugin-vue
+        working-directory: .
       - name: Run tests
         run: npm run test:unit
         working-directory: .
