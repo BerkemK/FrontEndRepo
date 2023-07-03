@@ -119,7 +119,6 @@ export default {
               location.reload();
           })
           .catch(error => console.log('error', error));
-
     },
     deleteItem(itemId) {
       const endpoint = `http://localhost:8080/drinks/${itemId}`;
