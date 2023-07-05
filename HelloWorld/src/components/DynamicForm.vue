@@ -115,7 +115,7 @@ export default {
       fetch(endpoint, requestOptions)
           .then(response => {
             console.log('Success:', data);
-              this.loadThings();
+              this.loadDrinks();
               location.reload();
           })
           .catch(error => console.log('error', error));
