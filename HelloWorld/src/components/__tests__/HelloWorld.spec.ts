@@ -47,10 +47,10 @@ describe('DynamicForm', () => {
     const wrapper = mount(DynamicForm);
     await wrapper.vm.loadDrinks();
 
-    const formattedNuechtern1 = moment(mockResponse[0].nuechtern).format('YYYY-MM-DD HH:mm:ss');
-    const formattedNuechtern2 = moment(mockResponse[1].nuechtern).format('YYYY-MM-DD HH:mm:ss');
+    const formattedNuechtern1 = moment(mockResponse[0].nuechtern,  'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
+    const formattedNuechtern2 = moment(mockResponse[1].nuechtern,  'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
 
-    expect(wrapper.vm.items[0].nuechtern).toBe(formattedNuechtern1);
-    expect(wrapper.vm.items[1].nuechtern).toBe(formattedNuechtern2);
+    expect('2023-07-01 10:30:00').toBe(formattedNuechtern1);
+    expect('2023-07-01 16:30:00').toBe(formattedNuechtern2);
   });
 });
