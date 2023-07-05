@@ -1,6 +1,7 @@
 <template>
   <div id="home" class="home">
-    <DynamicForm title="What did you drink today?"/>
+    <h1 class="page-title">Alkoholrechner</h1>
+    <DynamicForm title="Was haben Sie heute getrunken?" />
   </div>
 </template>
 
@@ -18,11 +19,21 @@ export default {
       claims: ''
     }
   },
-  created () { this.setup() },
+  created() {
+    this.setup()
+  },
   methods: {
-    async setup () {
-      if (this.$root.authenticated) { this.claims = await this.$auth.getUser() }
+    async setup() {
+      if (this.$root.authenticated) {
+        this.claims = await this.$auth.getUser()
+      }
     }
   }
 }
 </script>
+
+<style>
+.page-title {
+  text-align: center;
+}
+</style>
