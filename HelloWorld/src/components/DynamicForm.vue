@@ -131,7 +131,7 @@ export default {
             console.log('Items deleted:', itemId);
             // Remove the item from the local array
             this.items = this.items.filter(item => item.id !== itemId);
-            this.loadThings();
+            this.loadDrinks();
             location.reload();
           })
           .catch(error => console.log('error', error));
@@ -145,7 +145,7 @@ export default {
       fetch(endpoint, requestOptions)
           .then(response => {
             console.log('Items deleted');
-            this.loadThings();
+            this.loadDrinks();
             location.reload();
             this.items = [];
           })
