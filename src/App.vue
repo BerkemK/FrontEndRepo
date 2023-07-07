@@ -5,45 +5,40 @@
     <br>
     <table>
       <tr>
-          <td :style="{ color: canDrive === 'darf nicht Auto fahren' ? 'red' : 'green' }">
-            <h1> {{ canDrive }} </h1>
-          </td>
+        <td :style="{ color: canDrive === 'darf nicht Auto fahren' ? 'red' : 'green' }">
+          <h1>{{ canDrive }}</h1>
+        </td>
         <td>
-          <img v-if="canDrive === 'darf nicht Auto fahren'" src="src\components\bilder\kreuz.jpg" alt="Hier sollte ein rotes Kreuz zu sehen sein">
-          <img v-else src="src\components\bilder\haken.jpg" alt="hier sollte ein grüner Haken zu sehen sein">
+          <img v-if="canDrive === 'darf nicht Auto fahren'" src="src/components/bilder/kreuz.jpg" alt="Hier sollte ein rotes Kreuz zu sehen sein">
+          <img v-else src="src/components/bilder/haken.jpg" alt="hier sollte ein grüner Haken zu sehen sein">
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <h2 v-if="countdownSeconds > 0">Countdown: {{ countdownSeconds }} Sekunden</h2>
         </td>
       </tr>
     </table>
-
-
   </div>
   <router-view/>
-
-
 </template>
 
 <script>
-import moment from "moment/moment";
-
 export default {
   name: 'app',
   data() {
-    return { canDrive: '', claims: '' }
+    return {
+      canDrive: '',
+      countdownSeconds: 0,
+      claims: ''
+    };
   },
-  async created() {
+  created() {
     this.loadCanDrive();
-    await this.isAuthenticated();
-    this.$auth.authStateManager.subscribe(this.isAuthenticated);
-  },
-  watch: {
-    // Everytime the route changes, check for auth status
-    $route: 'isAuthenticated'
+    this.loadCountdown();
   },
   methods: {
-    async isAuthenticated () {
-      this.authenticated = await this.$auth.isAuthenticated()
-    },
-    async loadCanDrive() {
+    loadCanDrive() {
       const endpoint = 'http://localhost:8080/canDrive';
       const requestOptions = {
         method: 'GET',
@@ -56,12 +51,34 @@ export default {
           })
           .catch(error => console.log('error', error));
     },
-
-    async logout () {
-      await this.$auth.signOut()
+    loadCountdown() {
+      const endpoint = 'http://localhost:8080/countdown';
+      const requestOptions = {
+        method: 'GET',
+        redirect: 'follow'
+      };
+      fetch(endpoint, requestOptions)
+          .then(response => response.text())
+          .then(result => {
+            this.countdownSeconds = result;
+            this.startCountdown(); // Starte den Countdown nach dem Laden des Countdown-Werts
+          })
+          .catch(error => console.log('error', error));
+    },
+    startCountdown() {
+      if (this.countdownSeconds > 0) {
+        const countdownInterval = setInterval(() => {
+          this.countdownSeconds--;
+          if (this.countdownSeconds === 0) {
+            clearInterval(countdownInterval);
+          }
+        }, 1000);
+      }
     }
-  },}
+  }
+};
 </script>
+
 
 <style>
 #app {
