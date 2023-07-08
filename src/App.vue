@@ -13,9 +13,17 @@
           <img v-else src="src/components/bilder/haken.jpg" alt="hier sollte ein grüner Haken zu sehen sein">
         </td>
       </tr>
+    </table>
+    <table>
       <tr>
         <td colspan="2">
-          <h2 v-if="countdownSeconds > 0">Countdown: {{ countdownSeconds }} Sekunden</h2>
+          <h3 v-if="hours > 0">{{ hours }} Stunden</h3>
+        </td>
+        <td colspan="2">
+          <h3 v-if="minutes > 0">{{ minutes }} Minuten</h3>
+        </td>
+        <td colspan="2">
+          <h3 v-if="seconds > 0">{{ seconds }} Sekunden</h3>
         </td>
       </tr>
     </table>
@@ -30,7 +38,9 @@ export default {
     return {
       canDrive: '',
       countdownSeconds: 0,
-      claims: ''
+      hours: 0,
+      minutes: 0,
+      seconds: 0
     };
   },
   created() {
@@ -67,18 +77,20 @@ export default {
     },
     startCountdown() {
       if (this.countdownSeconds > 0) {
-        const countdownInterval = setInterval(() => {
+        const countdownTimer = setInterval(() => {
           this.countdownSeconds--;
           if (this.countdownSeconds === 0) {
-            clearInterval(countdownInterval);
+            clearInterval(countdownTimer);
           }
+          this.hours = Math.floor(this.countdownSeconds / 3600);
+          this.minutes = Math.floor((this.countdownSeconds % 3600) / 60);
+          this.seconds = this.countdownSeconds % 60;
         }, 1000);
       }
     }
   }
 };
 </script>
-
 
 <style>
 #app {
