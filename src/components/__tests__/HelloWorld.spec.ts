@@ -45,6 +45,7 @@ describe('DynamicForm', () => {
     global.fetch = mockFetch;
 
     const wrapper = mount(DynamicForm);
+    // @ts-ignore
     await wrapper.vm.loadDrinks();
 
     const formattedNuechtern1 = moment(mockResponse[0].nuechtern,  'YYYY-MM-DDTHH:mm:ss').format('YYYY-MM-DD HH:mm:ss');
@@ -52,5 +53,43 @@ describe('DynamicForm', () => {
 
     expect('2023-07-01 10:30:00').toBe(formattedNuechtern1);
     expect('2023-07-01 16:30:00').toBe(formattedNuechtern2);
+  });
+});
+
+describe('DynamicForm', () => {
+  it('sends the correct JSON body when saving', async () => {
+    const expectedData = {
+      name: 'Test Drink',
+      alcGehalt: '5',
+      ml: '250'
+    };
+
+    let requestPayload;
+    // @ts-ignore
+    const mockFetch = (url, options) => {
+      console.log('options.body:', options.body);
+      requestPayload = JSON.parse(options.body);
+      console.log('requestPayload:', requestPayload);
+      return Promise.resolve({
+        ok: true,
+        status: 200,
+        headers: new Headers()
+      });
+    };
+
+    // @ts-ignore
+    global.fetch = mockFetch;
+
+    const wrapper = mount(DynamicForm);
+    await wrapper.setData({
+      nameField: expectedData.name,
+      alcGehaltField: expectedData.alcGehalt,
+      mlField: expectedData.ml
+    });
+
+    // @ts-ignore
+    await wrapper.vm.save();
+
+    expect(requestPayload).toEqual(expectedData);
   });
 });
