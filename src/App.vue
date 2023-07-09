@@ -9,8 +9,8 @@
           <h1>{{ canDrive }}</h1>
         </td>
         <td>
-          <img v-if="canDrive === 'darf nicht Auto fahren'" src="src/assets/kreuz.jpg" alt="Hier sollte ein rotes Kreuz zu sehen sein">
-          <img v-else src="src/assets/haken.jpg" alt="hier sollte ein grüner Haken zu sehen sein">
+          <img v-if="canDrive === 'darf nicht Auto fahren'" src="/src/assets/kreuz.jpg" alt="Hier sollte ein rotes Kreuz zu sehen sein">
+          <img v-else src="/src/assets/haken.jpg" alt="hier sollte ein grüner Haken zu sehen sein">
         </td>
       </tr>
     </table>
